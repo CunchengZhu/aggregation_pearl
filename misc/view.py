@@ -12,7 +12,7 @@ import numpy as np
 ####################################################
 # folder = "/beads_on_pearl"
 # folder = "/intermediary"
-folder = ""
+folder = ".."
 # folder = "/no_pressure"
 # folder = "/tube"
 
