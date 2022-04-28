@@ -10,7 +10,7 @@ def scalingVariables():
     A_bar = 12.4866
     R_bar = np.sqrt(A_bar / 4 / np.pi)
     Kb = 8.22e-5
-    h = 4e-6 * (xi * R_bar**2 / Kb)
+    h = 1e-7 * (xi * R_bar**2 / Kb)
     return xi, A_bar, R_bar, Kb, h
 
 
@@ -50,7 +50,7 @@ def point(vertexPositions, vertexDualAreas, time, geodesicDistances):
 def parameters(xi, A_bar, R_bar, Kb):
     p = dg.Parameters()
 
-    p.proteinMobility = 3 * (1 / xi / R_bar ** 2)
+    p.proteinMobility = 0.1 * (1 / xi / R_bar ** 2)
     p.temperature = 0
 
     p.point.pt = [0, 0, 10 * R_bar]
@@ -101,7 +101,7 @@ def parameters(xi, A_bar, R_bar, Kb):
 
     p.dpd.gamma = 0
 
-    p.external.setForm(point)
+    # p.external.setForm(point)
     return p
 
 

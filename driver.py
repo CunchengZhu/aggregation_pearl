@@ -29,12 +29,12 @@ velocity = np.zeros(np.shape(vertex))
 ####################################################
 #                 System                           #
 ####################################################
-FRAME = 0
-# FRAME = dg_read.sizeOf(trajFile) - 1
+# FRAME = 0
+FRAME = dg_read.sizeOf(trajFile) - 1
 """ System construction """
 # g = dg.System(face, vertex, p)
-g = dg.System(face, vertex, proteinDensity, velocity, p)
-# g = dg.System(trajFile, FRAME, p)
+# g = dg.System(face, vertex, proteinDensity, velocity, p)
+g = dg.System(trajFile, FRAME, p)
 """ Mesh processor """
 g.meshProcessor.meshMutator.isShiftVertex = True
 g.meshProcessor.meshMutator.flipNonDelaunay = True
