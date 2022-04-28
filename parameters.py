@@ -35,8 +35,8 @@ def periodic(vertexPositions, vertexDualAreas, time, geodesicDistance):
 def point(vertexPositions, vertexDualAreas, time, geodesicDistances):
     xi, A_bar, R_bar, Kb, h = scalingVariables()
     decayTime = 100000 * h
-    std = 0.1 * R_bar
-    Kf = 1 * (Kb / R_bar)
+    std = 0.02 * R_bar
+    Kf = 5 * (Kb / R_bar)
     direction = dg_util.rowwiseNormalize(vertexPositions)
     magnitude = (
         Kf

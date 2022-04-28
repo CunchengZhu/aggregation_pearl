@@ -17,23 +17,24 @@ p = parameters.parameters(xi, A_bar, R_bar, Kb)
 ####################################################
 #            Initial conditions                    #
 ####################################################
-""" Built-in construction """
-face, vertex = dg.getIcosphere(1, 3)
-vertex = dg_util.sphericalHarmonicsPerturbation(vertex, 5, 6, 0.1)
-""" input construction """
+""" matrix construction """
+# face, vertex = dg.getIcosphere(1, 3)
+# vertex = dg_util.sphericalHarmonicsPerturbation(vertex, 5, 6, 0.1)
+face, vertex = dg_read.readMeshByPly("inputMesh.ply")
+""" trajFile construction """
 trajFile = outputDir + "//traj.nc"
-# inputMesh = outputDir + "/temp7/frame1780.ply"
 """ additional initial condition """
 proteinDensity = np.ones(np.shape(vertex)[0]) * 0.5
 velocity = np.zeros(np.shape(vertex))
 ####################################################
 #                 System                           #
 ####################################################
-FRAME = dg_read.sizeOf(trajFile) - 1
+FRAME = 0
+# FRAME = dg_read.sizeOf(trajFile) - 1
 """ System construction """
 # g = dg.System(face, vertex, p)
-# g = dg.System(face, vertex, proteinDensity, velocity, p)
-g = dg.System(trajFile, FRAME, p)
+g = dg.System(face, vertex, proteinDensity, velocity, p)
+# g = dg.System(trajFile, FRAME, p)
 """ Mesh processor """
 g.meshProcessor.meshMutator.isShiftVertex = True
 g.meshProcessor.meshMutator.flipNonDelaunay = True
@@ -62,13 +63,13 @@ fe = dg.Euler(
     system=g,
     characteristicTimeStep=h,
     totalTime=1000000 * h,
-    savePeriod=1000 * h,
+    savePeriod=200 * h,
     tolerance=0.1 * (Kb / R_bar),
     outputDirectory=outputDir,
     frame=FRAME,
 )
 """ settings """
-fe.updateGeodesicsPeriod = 20
+fe.updateGeodesicsPeriod = 100
 fe.processMeshPeriod = 20
 # fe.fluctuatePeriod = 10
 # fe.fluctuateAmplitude = 0.001
