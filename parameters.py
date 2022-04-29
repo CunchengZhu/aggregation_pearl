@@ -64,6 +64,7 @@ def parameters(xi, A_bar, R_bar, Kb):
     p.boundary.proteinBoundaryCondition = "none"
 
     p.variation.isProteinVariation = True
+    p.variation.isProteinConservation = True
     p.variation.isShapeVariation = True
     p.variation.geodesicMask = -1
 
@@ -82,6 +83,8 @@ def parameters(xi, A_bar, R_bar, Kb):
     p.adsorption.epsilon = -2 * Kb / R_bar**2
 
     p.aggregation.chi = 5 * Kb / R_bar**2
+
+    p.entropy.xi = 1 * Kb / R_bar**2
 
     p.osmotic.isPreferredVolume = True
     p.osmotic.isConstantOsmoticPressure = False
