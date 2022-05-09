@@ -2,6 +2,7 @@ import pymem3dg as dg
 import pymem3dg.util as dg_util
 import numpy as np
 import copy
+import pymem3dg.read as dg_read
 
 
 def scalingVariables():
@@ -47,10 +48,29 @@ def point(vertexPositions, vertexDualAreas, time, geodesicDistances):
     return dg_util.rowwiseScaling(magnitude, direction)
 
 
+def initialConditionsByMatrices():
+    """matrix construction"""
+    face, vertex = dg.getIcosphere(1, 3)
+    # face, vertex = dg_read.readMeshByPly("inputMesh.ply")
+    vertex = dg_util.sphericalHarmonicsPerturbation(vertex, 5, 6, 0.1)
+    proteinDensity = np.ones(np.shape(vertex)[0]) * 0.5
+    velocity = np.zeros(np.shape(vertex))
+    FRAME = 0
+    return face, vertex, proteinDensity, velocity, FRAME
+
+
+def continuationByNc():
+    """trajFile construction"""
+    outputDir = "."
+    trajFile = outputDir + "//traj.nc"
+    FRAME = dg_read.sizeOf(trajFile) - 1
+    return trajFile, FRAME
+
+
 def parameters(xi, A_bar, R_bar, Kb):
     p = dg.Parameters()
 
-    p.proteinMobility = 0.1 * (1 / xi / R_bar ** 2)
+    p.proteinMobility = 0.1 * (1 / xi / R_bar**2)
     p.temperature = 0
 
     p.point.pt = [0, 0, 10 * R_bar]
@@ -91,7 +111,7 @@ def parameters(xi, A_bar, R_bar, Kb):
     p.osmotic.Kv = 500 * Kb
     p.osmotic.V_res = 0
     p.osmotic.n = 1
-    p.osmotic.Vt = 0.85 * (4/3 * np.pi * R_bar**3)
+    p.osmotic.Vt = 0.85 * (4 / 3 * np.pi * R_bar**3)
     p.osmotic.cam = -1
     p.osmotic.lambdaV = 0
 
@@ -104,7 +124,16 @@ def parameters(xi, A_bar, R_bar, Kb):
 
     p.dpd.gamma = 0
 
-    # p.external.setForm(point)
+    p.external.setForm(None)
+
+    p.spring.Kst = 0.001
+    p.spring.Ksl = 0.001
+    p.spring.Kse = 0.001
+    
+    # face, vertex, _, _, _ = initialConditionsByMatrices()
+    trajFile, FRAME = continuationByNc()
+    face, vertex = dg_read.readMeshByNc(trajFile, FRAME)
+    p.spring.readReferenceData(face, vertex)
     return p
 
 

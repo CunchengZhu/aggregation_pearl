@@ -17,22 +17,12 @@ p = parameters.parameters(xi, A_bar, R_bar, Kb)
 ####################################################
 #            Initial conditions                    #
 ####################################################
-""" matrix construction """
-# face, vertex = dg.getIcosphere(1, 3)
-# vertex = dg_util.sphericalHarmonicsPerturbation(vertex, 5, 6, 0.1)
-face, vertex = dg_read.readMeshByPly("inputMesh.ply")
-""" trajFile construction """
-trajFile = outputDir + "//traj.nc"
-""" additional initial condition """
-proteinDensity = np.ones(np.shape(vertex)[0]) * 0.5
-velocity = np.zeros(np.shape(vertex))
+# face, vertex, proteinDensity, velocity, FRAME = parameters.initialConditionsByMatrices()
+trajFile, FRAME = parameters.continuationByNc()
 ####################################################
 #                 System                           #
 ####################################################
-# FRAME = 0
-FRAME = dg_read.sizeOf(trajFile) - 1
 """ System construction """
-# g = dg.System(face, vertex, p)
 # g = dg.System(face, vertex, proteinDensity, velocity, p)
 g = dg.System(trajFile, FRAME, p)
 """ Mesh processor """
@@ -47,12 +37,8 @@ g.meshProcessor.meshMutator.curvTol = 0.004 / R_bar
 g.meshProcessor.meshMutator.collapseSkinny = True
 g.meshProcessor.meshMutator.collapseSmall = True
 g.meshProcessor.meshMutator.collapseFlat = True
-g.meshProcessor.meshMutator.targetFaceArea = 0.0003 * R_bar ** 2
+g.meshProcessor.meshMutator.targetFaceArea = 0.0003 * R_bar**2
 g.meshProcessor.meshMutator.isSmoothenMesh = True
-# g.meshProcessor.meshRegularizer.Kst = 0.1 # 2e-6
-# g.meshProcessor.meshRegularizer.Ksl = 0
-# g.meshProcessor.meshRegularizer.Kse = 0
-# g.meshProcessor.meshRegularizer.readReferenceData(icoFace, icoVertex, 0)
 """ System initialization """
 g.initialize(nMutation=0, ifMute=False)
 ####################################################
