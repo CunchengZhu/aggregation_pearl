@@ -129,11 +129,6 @@ def parameters(xi, A_bar, R_bar, Kb):
     p.spring.Kst = 0.001
     p.spring.Ksl = 0.001
     p.spring.Kse = 0.001
-    
-    # face, vertex, _, _, _ = initialConditionsByMatrices()
-    trajFile, FRAME = continuationByNc()
-    face, vertex = dg_read.readMeshByNc(trajFile, FRAME)
-    p.spring.readReferenceData(face, vertex)
     return p
 
 

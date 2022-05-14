@@ -17,14 +17,20 @@ p = parameters.parameters(xi, A_bar, R_bar, Kb)
 ####################################################
 #            Initial conditions                    #
 ####################################################
-# face, vertex, proteinDensity, velocity, FRAME = parameters.initialConditionsByMatrices()
-trajFile, FRAME = parameters.continuationByNc()
+(
+    face,
+    vertex,
+    proteinDensity,
+    velocity,
+    FRAME
+) = parameters.initialConditionsByMatrices()
+# trajFile, FRAME = parameters.continuationByNc()
 ####################################################
 #                 System                           #
 ####################################################
 """ System construction """
-# g = dg.System(face, vertex, proteinDensity, velocity, p)
-g = dg.System(trajFile, FRAME, p)
+g = dg.System(face, vertex, proteinDensity, velocity, p)
+# g = dg.System(trajFile, FRAME, p)
 """ Mesh processor """
 g.meshProcessor.meshMutator.isShiftVertex = True
 g.meshProcessor.meshMutator.flipNonDelaunay = True
@@ -41,6 +47,7 @@ g.meshProcessor.meshMutator.targetFaceArea = 0.0003 * R_bar**2
 g.meshProcessor.meshMutator.isSmoothenMesh = True
 """ System initialization """
 g.initialize(nMutation=0, ifMute=False)
+# g.testForceComputation(h)
 ####################################################
 #          Time integration / Optimization         #
 ####################################################
