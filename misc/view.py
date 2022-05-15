@@ -54,7 +54,9 @@ dg_vis.animate(
     bendingPotential=True,
     diffusionPotential=True,
     aggregationPotential=True,
-    adsorptionPotential=True)
+    adsorptionPotential=True,
+    springForce=True,
+    entropyForce=True)
 
 ####################################################
 #            visualize energy                      #

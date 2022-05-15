@@ -20,6 +20,7 @@ p = parameters.parameters(xi, A_bar, R_bar, Kb)
 (
     face,
     vertex,
+    refVertex,
     proteinDensity,
     velocity,
     FRAME
@@ -29,7 +30,7 @@ p = parameters.parameters(xi, A_bar, R_bar, Kb)
 #                 System                           #
 ####################################################
 """ System construction """
-g = dg.System(face, vertex, proteinDensity, velocity, p)
+g = dg.System(face, vertex, refVertex, proteinDensity, velocity, p)
 # g = dg.System(trajFile, FRAME, p)
 """ Mesh processor """
 g.meshProcessor.meshMutator.isShiftVertex = True
@@ -63,7 +64,7 @@ fe = dg.Euler(
 )
 """ settings """
 fe.updateGeodesicsPeriod = 100
-fe.processMeshPeriod = 20
+fe.processMeshPeriod = 10000
 # fe.fluctuatePeriod = 10
 # fe.fluctuateAmplitude = 0.001
 fe.isBacktrack = True

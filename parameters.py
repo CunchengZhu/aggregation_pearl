@@ -53,10 +53,11 @@ def initialConditionsByMatrices():
     face, vertex = dg.getIcosphere(1, 3)
     # face, vertex = dg_read.readMeshByPly("inputMesh.ply")
     vertex = dg_util.sphericalHarmonicsPerturbation(vertex, 5, 6, 0.1)
+    refVertex = dg_util.sphericalHarmonicsPerturbation(vertex, 5, 6, 0.1)
     proteinDensity = np.ones(np.shape(vertex)[0]) * 0.5
     velocity = np.zeros(np.shape(vertex))
     FRAME = 0
-    return face, vertex, proteinDensity, velocity, FRAME
+    return face, vertex, refVertex, proteinDensity, velocity, FRAME
 
 
 def continuationByNc():
