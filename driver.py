@@ -5,6 +5,8 @@ import pymem3dg.read as dg_read
 import numpy as np
 import parameters
 
+# CONTINUE = True
+CONTINUE = False
 ####################################################
 #                 Initialize pathes                #
 ####################################################
@@ -17,21 +19,25 @@ p = parameters.parameters(xi, A_bar, R_bar, Kb)
 ####################################################
 #            Initial conditions                    #
 ####################################################
-(
-    face,
-    vertex,
-    refVertex,
-    proteinDensity,
-    velocity,
-    FRAME
-) = parameters.initialConditionsByMatrices()
-# trajFile, FRAME = parameters.continuationByNc()
+if CONTINUE:
+    trajFile, FRAME = parameters.continuationByNc()
+else:
+    (
+        face,
+        vertex,
+        refVertex,
+        proteinDensity,
+        velocity,
+        FRAME
+    ) = parameters.initialConditionsByMatrices()
 ####################################################
 #                 System                           #
 ####################################################
 """ System construction """
-g = dg.System(face, vertex, refVertex, proteinDensity, velocity, p)
-# g = dg.System(trajFile, FRAME, p)
+if CONTINUE:
+    g = dg.System(trajFile, FRAME, p)
+else:
+    g = dg.System(face, vertex, refVertex, proteinDensity, velocity, p)
 """ Mesh processor """
 g.meshProcessor.meshMutator.isShiftVertex = True
 g.meshProcessor.meshMutator.flipNonDelaunay = True
@@ -57,7 +63,7 @@ fe = dg.Euler(
     system=g,
     characteristicTimeStep=h,
     totalTime=1000000 * h,
-    savePeriod=200 * h,
+    savePeriod=1000 * h,
     tolerance=0.1 * (Kb / R_bar),
     outputDirectory=outputDir,
     frame=FRAME,

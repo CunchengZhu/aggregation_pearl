@@ -3,7 +3,7 @@ import pymem3dg.util as dg_util
 import numpy as np
 import copy
 import pymem3dg.read as dg_read
-
+from numpy.random import RandomState
 
 def scalingVariables():
     # temp variable
@@ -55,7 +55,8 @@ def initialConditionsByMatrices():
     # vertex = dg_util.sphericalHarmonicsPerturbation(vertex, 5, 6, 0.1)
     # refVertex = dg_util.sphericalHarmonicsPerturbation(vertex, 5, 6, 0.1)
     refVertex = vertex
-    proteinDensity = np.ones(np.shape(vertex)[0]) * 0.5
+    prng = RandomState(1234567890)
+    proteinDensity = prng.rand(np.shape(vertex)[0])
     velocity = np.zeros(np.shape(vertex))
     FRAME = 0
     return face, vertex, refVertex, proteinDensity, velocity, FRAME
@@ -102,7 +103,7 @@ def parameters(xi, A_bar, R_bar, Kb):
     p.tension.At = A_bar
     p.tension.lambdaSG = 0
 
-    p.adsorption.epsilon = -2 * Kb / R_bar**2
+    p.adsorption.epsilon = -0.5 * Kb / R_bar**2
 
     p.aggregation.chi = 5 * Kb / R_bar**2
 
