@@ -51,7 +51,7 @@ def point(vertexPositions, vertexDualAreas, time, geodesicDistances):
 def initialConditionsByMatrices():
     """matrix construction"""
     # face, vertex = dg.getIcosphere(1, 3)
-    face, vertex = dg_read.readMeshByPly("inputMesh.ply")
+    face, vertex = dg_read.readMeshByPly("../inputMesh.ply")
     # vertex = dg_util.sphericalHarmonicsPerturbation(vertex, 5, 6, 0.1)
     # refVertex = dg_util.sphericalHarmonicsPerturbation(vertex, 5, 6, 0.1)
     refVertex = vertex
@@ -73,7 +73,7 @@ def continuationByNc():
 def parameters(xi, A_bar, R_bar, Kb):
     p = dg.Parameters()
 
-    p.proteinMobility = 0.1 * (1 / xi / R_bar**2)
+    p.proteinMobility = 0.01 * (1 / xi / R_bar**2)
     p.temperature = 0
 
     p.point.pt = [0, 0, 10 * R_bar]
@@ -103,9 +103,9 @@ def parameters(xi, A_bar, R_bar, Kb):
     p.tension.At = A_bar
     p.tension.lambdaSG = 0
 
-    p.adsorption.epsilon = -0.5 * Kb / R_bar**2
+    p.adsorption.epsilon = 0 * Kb / R_bar**2
 
-    p.aggregation.chi = 5 * Kb / R_bar**2
+    p.aggregation.chi = 0 * Kb / R_bar**2
 
     p.entropy.xi = 1 * Kb / R_bar**2
 
