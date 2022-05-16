@@ -50,10 +50,11 @@ def point(vertexPositions, vertexDualAreas, time, geodesicDistances):
 
 def initialConditionsByMatrices():
     """matrix construction"""
-    face, vertex = dg.getIcosphere(1, 3)
-    # face, vertex = dg_read.readMeshByPly("inputMesh.ply")
-    vertex = dg_util.sphericalHarmonicsPerturbation(vertex, 5, 6, 0.1)
-    refVertex = dg_util.sphericalHarmonicsPerturbation(vertex, 5, 6, 0.1)
+    # face, vertex = dg.getIcosphere(1, 3)
+    face, vertex = dg_read.readMeshByPly("inputMesh.ply")
+    # vertex = dg_util.sphericalHarmonicsPerturbation(vertex, 5, 6, 0.1)
+    # refVertex = dg_util.sphericalHarmonicsPerturbation(vertex, 5, 6, 0.1)
+    refVertex = vertex
     proteinDensity = np.ones(np.shape(vertex)[0]) * 0.5
     velocity = np.zeros(np.shape(vertex))
     FRAME = 0
@@ -127,9 +128,9 @@ def parameters(xi, A_bar, R_bar, Kb):
 
     p.external.setForm(None)
 
-    p.spring.Kst = 0.001
-    p.spring.Ksl = 0.001
-    p.spring.Kse = 0.001
+    p.spring.Kst = 0
+    p.spring.Ksl = 0
+    p.spring.Kse = 0
     return p
 
 
