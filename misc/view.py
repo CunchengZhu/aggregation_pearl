@@ -13,35 +13,26 @@ import numpy as np
 # folder = "/beads_on_pearl"
 # folder = "/intermediary"
 # folder = r"H:/Shared drives/Rangamani Lab Drive/Cuncheng Zhu/manuscript_in_process/feng_pearling/repo/aggregation_pearl/chi20"
-folder = "../chi5"
+folder = "../chi_"
+var = 4
+subFolder = folder + f"/chi{var}"
 # folder = "/no_pressure"
 # folder = "/tube"
-
+parameterFile = imp.load_source("module.name", folder + "/parameters.py")
+xi, Ksg, Kb, R_bar, h = parameterFile.scalingVariables()
+parameters = parameterFile.parameters(xi, R_bar, Kb, Ksg)
+parameters.aggregation.chi = var * Kb / R_bar**2
+trajNc = subFolder + "/traj.nc"
 ####################################################
 #                  visualize .ply                  #
 ####################################################
-# ply =  folder + "f15_t15148_.ply"
-# face, vertex = dg.readMesh(ply)
-# # print(dg.readData(ply))
-# # print(dg.readData(ply, 'vertex'))
-# # H = dg.readData(ply, 'vertex', 'mean_curvature')
-# # Fb = dg.readData(ply, 'vertex', 'bending_force')
-
-# ps.init()
-# ps_mesh = ps.register_surface_mesh("membrane", vertex, face)
-# # ps_mesh.add_scalar_quantity("mean_curvature", H, enabled=True)
-# # ps_mesh.add_scalar_quantity("bending_force", Fb, enabled=True, vminmax=(-1e-5, 1e-5))
-# ps.set_up_dir("z_up")
-# ps.show()
+# dg_vis.visualizePly(plyFile, meanCurvature=True, gaussianCurvature=True)
 
 ####################################################
 #            visualize animated .nc                #
 ####################################################
-parameterFile = imp.load_source("module.name", folder + "/parameters.py")
-xi, Ksg, Kb, R_bar, h = parameterFile.scalingVariables()
-parameters = parameterFile.parameters(xi, R_bar, Kb, Ksg)
 dg_vis.animate(
-    folder + "/traj.nc",
+    trajNc,
     parameters=parameters,
     meanCurvature=True,
     gaussianCurvature=True,
@@ -57,14 +48,15 @@ dg_vis.animate(
     aggregationPotential=True,
     adsorptionPotential=True,
     springForce=True,
-    entropyForce=True)
+    entropyForce=True,
+)
 
 ####################################################
 #            visualize energy                      #
 ####################################################
-dg_vis.getEnergyTrajectoryFromNc(
-    trajFile=folder + "/traj.nc",
-    parameters=parameters,
+dg_vis.plotEnergy(
+    trajNc,
+    parameters,
     # potentialEnergy=True,
     # kineticEnergy=True,
     # totalEnergy=True,
@@ -79,5 +71,5 @@ dg_vis.getEnergyTrajectoryFromNc(
     # edgeSpringEnergy=True,
     # faceSpringEnergy=True,
     # lcrSpringEnergy=True,
-    dirichletEnergy=True
+    dirichletEnergy=True,
 )
