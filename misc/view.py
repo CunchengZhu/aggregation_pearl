@@ -12,6 +12,7 @@ import numpy as np
 ####################################################
 # folder = "/beads_on_pearl"
 # folder = "/intermediary"
+# folder = r"H:/Shared drives/Rangamani Lab Drive/Cuncheng Zhu/manuscript_in_process/feng_pearling/repo/aggregation_pearl/chi20"
 folder = ".."
 # folder = "/no_pressure"
 # folder = "/tube"
@@ -61,53 +62,22 @@ dg_vis.animate(
 ####################################################
 #            visualize energy                      #
 ####################################################
-# trajFile = folder + "/traj.nc"
-
-# parameterFile = imp.load_source("module.name", folder + "/parameters.py")
-# xi, R_bar, Kb, h = parameterFile.scalingVariables()
-# p = parameterFile.parameters(xi, R_bar, Kb)
-
-# frameLim = (0, dg_read.sizeOf(trajFile))
-# frameNum = frameLim[1] - frameLim[0]
-# time = np.zeros(frameNum)
-# kineticEnergy = np.zeros(frameNum)
-# potentialEnergy = np.zeros(frameNum)
-# externalWork = np.zeros(frameNum)
-# totalEnergy = np.zeros(frameNum)
-# volume = np.zeros(frameNum)
-# for frame in range(frameNum):
-#     system = dg.System(
-#         trajFile,
-#         frame,
-#         p
-#     )
-#     system.initialize(nMutation = 0, ifMute = True)
-#     time[frame] = system.time
-#     volume[frame] = system.volume
-#     system.computeTotalEnergy()
-#     energy = system.getEnergy()
-#     kineticEnergy[frame] = energy.kineticEnergy
-#     potentialEnergy[frame] = energy.potentialEnergy
-#     if frame != 0:
-#         externalWork[frame] = externalWork[
-#             frame - 1
-#         ] + system.computeIntegratedPower(time[frame] - time[frame - 1])
-# totalEnergy = potentialEnergy + kineticEnergy - externalWork
-# reducedVolume = volume / (3.14 * 4 / 3)
-
-# # plotting
-# fig, ax1 = plt.subplots()
-# color = 'tab:red'
-# ax1.set_xlabel('time')
-# ax1.set_ylabel('energy', color=color)
-# ax1.plot(time, totalEnergy, color=color)
-# ax1.tick_params(axis='y', labelcolor=color)
-
-# ax2 = ax1.twinx()
-# color = 'tab:blue'
-# ax2.set_ylabel('reduced volume', color=color)
-# ax2.plot(time, reducedVolume, color=color)
-# ax2.tick_params(axis='y', labelcolor=color)
-
-# fig.tight_layout()
-# plt.show()
+dg_vis.getEnergyTrajectoryFromNc(
+    trajFile=folder + "/traj.nc",
+    parameters=parameters,
+    # potentialEnergy=True,
+    # kineticEnergy=True,
+    # totalEnergy=True,
+    bendingEnergy=True,
+    # externalWork=True,
+    # deviatoricEnergy=True,
+    # surfaceEnergy=True,
+    pressureEnergy=True,
+    # adsorptionEnergy=True,
+    aggregationEnergy=True,
+    entropyEnergy=True,
+    # edgeSpringEnergy=True,
+    # faceSpringEnergy=True,
+    # lcrSpringEnergy=True,
+    dirichletEnergy=True
+)
