@@ -13,7 +13,7 @@ import numpy as np
 # folder = "/beads_on_pearl"
 # folder = "/intermediary"
 # folder = r"H:/Shared drives/Rangamani Lab Drive/Cuncheng Zhu/manuscript_in_process/feng_pearling/repo/aggregation_pearl/chi20"
-folder = ".."
+folder = "../chi5"
 # folder = "/no_pressure"
 # folder = "/tube"
 
