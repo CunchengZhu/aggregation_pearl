@@ -7,25 +7,21 @@ import numpy as np
 def worker(args):
     dir = args[0]
     var = args[1]
+    CONTINUE = args[2]
     if not os.path.exists(dir):
         os.mkdir(dir)
     os.chdir(dir)
     xi, A_bar, R_bar, Kb, h = ps.scalingVariables()
     parameters = ps.parameters(xi, A_bar, R_bar, Kb)
     parameters.aggregation.chi = var * Kb / R_bar**2
-    localRun(parameters, CONTINUE = True)
-    
+    localRun(parameters, CONTINUE = CONTINUE)
 
-# for i, kb in enumerate(np.arange(0,0.1,0.01)):
-#     for replicate in np.arange(0,10000):
-#         path = f'run_{i}_{replicate}/'
-
-def runSims():
+def runSims(CONTINUE = True):
     jobs = []
-    for v in np.arrange(0, 10, 2):
+    for v in np.arange(0, 12, 2):
         path = f'chi{v}'
-        jobs.append((path, v))
+        jobs.append((path, v, CONTINUE))
     process_map(worker, jobs, max_workers=12)
 
 if __name__ == "__main__":
-    runSims()
+    runSims(CONTINUE=False)
