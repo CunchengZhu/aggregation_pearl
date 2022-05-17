@@ -11,7 +11,7 @@ def scalingVariables():
     A_bar = 12.4866
     R_bar = np.sqrt(A_bar / 4 / np.pi)
     Kb = 8.22e-5
-    h = 1e-7 * (xi * R_bar**2 / Kb)
+    h = 1e-8 * (xi * R_bar**2 / Kb)
     return xi, A_bar, R_bar, Kb, h
 
 
@@ -118,7 +118,7 @@ def parameters(xi, A_bar, R_bar, Kb):
     p.osmotic.cam = -1
     p.osmotic.lambdaV = 0
 
-    p.dirichlet.eta = 0.1 * Kb
+    p.dirichlet.eta = 1 * Kb
 
     p.selfAvoidance.d = 0.001
     p.selfAvoidance.mu = 0

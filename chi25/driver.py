@@ -5,8 +5,8 @@ import pymem3dg.read as dg_read
 import numpy as np
 import parameters
 
-# CONTINUE = True
-CONTINUE = False
+CONTINUE = True
+# CONTINUE = False
 ####################################################
 #                 Initialize pathes                #
 ####################################################
