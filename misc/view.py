@@ -13,8 +13,8 @@ subFolder = folder + f"/chi{var}"
 # folder = "/no_pressure"
 # folder = "/tube"
 parameterFile = imp.load_source("module.name", folder + "/parameters.py")
-xi, Ksg, Kb, R_bar, h = parameterFile.scalingVariables()
-parameters = parameterFile.parameters(xi, R_bar, Kb, Ksg)
+xi, A_bar, R_bar, Kb, h = parameterFile.scalingVariables()
+parameters = parameterFile.parameters(xi, A_bar, R_bar, Kb)
 parameters.aggregation.chi = var * Kb / R_bar**2
 trajNc = subFolder + "/traj.nc"
 ####################################################
