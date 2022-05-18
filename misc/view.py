@@ -8,7 +8,7 @@ import imp
 # folder = "/intermediary"
 # folder = r"H:/Shared drives/Rangamani Lab Drive/Cuncheng Zhu/manuscript_in_process/feng_pearling/repo/aggregation_pearl/chi20"
 folder = "../run5"
-var = 8
+var = 4
 subFolder = folder + f"/chi{var}"
 # folder = "/no_pressure"
 # folder = "/tube"
@@ -43,7 +43,8 @@ dg_vis.animate(
     diffusionPotential=True,
     aggregationPotential=True,
     adsorptionPotential=True,
-    entropyPotential=True
+    entropyPotential=True,
+    inPlaneFluxForm=True,
 )
 
 ####################################################
