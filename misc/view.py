@@ -1,11 +1,5 @@
-import pymem3dg as dg
 import pymem3dg.visual as dg_vis
-import pymem3dg.util as dg_util
-import pymem3dg.read as dg_read
-import polyscope as ps
 import imp
-import matplotlib.pyplot as plt
-import numpy as np
 
 ####################################################
 #                 Initialize pathes                #
@@ -13,8 +7,8 @@ import numpy as np
 # folder = "/beads_on_pearl"
 # folder = "/intermediary"
 # folder = r"H:/Shared drives/Rangamani Lab Drive/Cuncheng Zhu/manuscript_in_process/feng_pearling/repo/aggregation_pearl/chi20"
-folder = "../chi_"
-var = 4
+folder = "../run5"
+var = 8
 subFolder = folder + f"/chi{var}"
 # folder = "/no_pressure"
 # folder = "/tube"
@@ -42,13 +36,14 @@ dg_vis.animate(
     capillaryForce=True,
     lineCapillaryForce=True,
     osmoticForce=True,
+    springForce=True,
+    entropyForce=True,
     chemicalPotential=True,
     bendingPotential=True,
     diffusionPotential=True,
     aggregationPotential=True,
     adsorptionPotential=True,
-    springForce=True,
-    entropyForce=True,
+    entropyPotential=True
 )
 
 ####################################################
@@ -57,13 +52,13 @@ dg_vis.animate(
 dg_vis.plotEnergy(
     trajNc,
     parameters,
-    # potentialEnergy=True,
+    potentialEnergy=True,
     # kineticEnergy=True,
     # totalEnergy=True,
     bendingEnergy=True,
     # externalWork=True,
     # deviatoricEnergy=True,
-    # surfaceEnergy=True,
+    surfaceEnergy=True,
     pressureEnergy=True,
     # adsorptionEnergy=True,
     aggregationEnergy=True,
