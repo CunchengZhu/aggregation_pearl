@@ -18,7 +18,7 @@ def worker(args):
 
 def runSims(CONTINUE = True):
     jobs = []
-    for v in np.arange(0, 12, 2):
+    for v in np.arange(0, 120, 20):
         path = f'chi{v}'
         jobs.append((path, v, CONTINUE))
     process_map(worker, jobs, max_workers=12)
