@@ -1,12 +1,14 @@
 import pymem3dg.visual as dg_vis
+import matplotlib.pyplot as plt
 import imp
+import numpy as np
 
 ####################################################
 #                 Initialize pathes                #
 ####################################################
 # folder = r"H:/Shared drives/Rangamani Lab Drive/Cuncheng Zhu/manuscript_in_process/feng_pearling/repo/aggregation_pearl/chi20"
-folder = "../run5"
-var = 4
+folder = "../run7"
+var = 100
 subFolder = folder + f"/chi{var}"
 parameterFile = imp.load_source("module.name", folder + "/parameters.py")
 xi, A_bar, R_bar, Kb, h = parameterFile.scalingVariables()
@@ -21,42 +23,50 @@ trajNc = subFolder + "/traj.nc"
 ####################################################
 #            visualize animated .nc                #
 ####################################################
-dg_vis.animate(
-    trajNc,
-    parameters=parameters,
-    meanCurvature=True,
-    gaussianCurvature=True,
-    bendingForce=True,
-    externalForce=True,
-    mechanicalForce=True,
-    capillaryForce=True,
-    lineCapillaryForce=True,
-    osmoticForce=True,
-    springForce=True,
-    entropyForce=True,
-    chemicalPotential=True,
-    bendingPotential=True,
-    diffusionPotential=True,
-    aggregationPotential=True,
-    adsorptionPotential=True,
-    entropyPotential=True,
-    inPlaneFluxForm=True,
-)
+# dg_vis.animate(
+#     trajNc,
+#     parameters=parameters,
+#     meanCurvature=True,
+#     gaussianCurvature=True,
+#     bendingForce=True,
+#     externalForce=True,
+#     mechanicalForce=True,
+#     capillaryForce=True,
+#     lineCapillaryForce=True,
+#     osmoticForce=True,
+#     springForce=True,
+#     entropyForce=True,
+#     chemicalPotential=True,
+#     bendingPotential=True,
+#     diffusionPotential=True,
+#     aggregationPotential=True,
+#     adsorptionPotential=True,
+#     entropyPotential=True,
+#     inPlaneFluxForm=True,
+# )
 
 ####################################################
-#            visualize energy                      #
+#                         plots                    #
 ####################################################
+sp_size = (2, 2)
+fig, axs = plt.subplots(sp_size[0], sp_size[1])
+dg_vis.matplotlibStyle(9, 10, 12)
+fig.set_size_inches(8, 6)
+count = 0
 dg_vis.plotEnergy(
+    axs[np.unravel_index(count, sp_size, "F")],
     trajNc,
     parameters,
+    # logScale=True,
+    zeroing=True,
     potentialEnergy=True,
     # kineticEnergy=True,
     # totalEnergy=True,
     bendingEnergy=True,
     # externalWork=True,
     # deviatoricEnergy=True,
-    surfaceEnergy=True,
-    pressureEnergy=True,
+    # surfaceEnergy=True,
+    # pressureEnergy=True,
     # adsorptionEnergy=True,
     aggregationEnergy=True,
     entropyEnergy=True,
@@ -65,3 +75,43 @@ dg_vis.plotEnergy(
     # lcrSpringEnergy=True,
     dirichletEnergy=True,
 )
+count = count + 1
+
+dg_vis.plotForcing(
+    axs[np.unravel_index(count, sp_size, "F")], trajNc, parameters, logScale=True
+)
+count = count + 1
+
+dg_vis.plotChemicalPotentials(
+    axs[np.unravel_index(count, sp_size, "F")],
+    trajNc,
+    parameters,
+    logScale=True,
+    bendingPotential=True,
+    # deviatoricPotential=True,
+    aggregationPotential=True,
+    entropyPotential=True,
+    dirichletPotential=True,
+    # adsorptionPotential=True,
+)
+count = count + 1
+
+dg_vis.plotMechanicalForces(
+    axs[np.unravel_index(count, sp_size, "F")],
+    trajNc,
+    parameters,
+    logScale=True,
+    bendingForce=True,
+    # capillaryForce=True,
+    # osmoticForce=True,
+    # adsorptionForce=True,
+    lineCapillaryForce=True,
+    aggregationForce=True,
+    # externalForce=True,
+    entropyForce=True,
+    # springForce=True,
+)
+count = count + 1
+
+fig.tight_layout()
+plt.show()
