@@ -1,4 +1,5 @@
 import pymem3dg.visual as dg_vis
+import pymem3dg.read as dg_read
 import matplotlib.pyplot as plt
 import imp
 import numpy as np
@@ -27,12 +28,19 @@ trajNc = subFolder + "/traj.nc"
 # dg_vis.polyscopeStyle(True)
 # ps_mesh = ps.register_surface_mesh("mesh", vertex, face, smooth_shade=True)
 # ps.show()
+
+dg_vis.animate(
+    trajNc,
+    frames=[dg_read.sizeOf(trajNc) - 1],
+    parameters=parameters,
+)
+ps.screenshot("hello.png")
 ####################################################
 #            visualize animated .nc                #
 ####################################################
 dg_vis.animate(
     trajNc,
-    frames=5,
+    frames=[5],
     parameters=parameters,
     meanCurvature=True,
     gaussianCurvature=True,
@@ -52,17 +60,14 @@ dg_vis.animate(
     entropyPotential=True,
     inPlaneFluxForm=True,
 )
-ps.set_screenshot_extension(".jpg");
-ps.screenshot("hello.png")
 # ps.show()
-
 ####################################################
 #                         plots                    #
 ####################################################
-# sp_size = (2, 2)
+# sp_size = (3,2)
 # fig, axs = plt.subplots(sp_size[0], sp_size[1])
 # dg_vis.matplotlibStyle(9, 10, 12)
-# fig.set_size_inches(8, 6)
+# fig.set_size_inches(8, 9)
 # count = 0
 # dg_vis.plotEnergy(
 #     axs[np.unravel_index(count, sp_size, "F")],
@@ -85,11 +90,6 @@ ps.screenshot("hello.png")
 #     # faceSpringEnergy=True,
 #     # lcrSpringEnergy=True,
 #     dirichletEnergy=True,
-# )
-# count = count + 1
-
-# dg_vis.plotForcing(
-#     axs[np.unravel_index(count, sp_size, "F")], trajNc, parameters, logScale=True
 # )
 # count = count + 1
 
@@ -123,6 +123,15 @@ ps.screenshot("hello.png")
 #     # springForce=True,
 # )
 # count = count + 1
+
+# count = np.prod(sp_size) - 1
+# dg_vis.overlayColorMap(
+#     axs[np.unravel_index(count, sp_size, "F")],
+#     "hello.png",
+#     [0, 1],
+#     "$\phi$",
+#     orientation="vertical",
+# )
 
 # fig.tight_layout()
 # plt.show()
