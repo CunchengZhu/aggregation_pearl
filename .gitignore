@@ -3,6 +3,12 @@
 *.nc
 *.mat
 
+# videos
+recordings/
+colormapped/
+*.mp4
+*.gif
+
 # polyscope
 *.ini
 
