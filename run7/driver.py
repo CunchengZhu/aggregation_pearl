@@ -3,7 +3,6 @@ import pymem3dg.util as dg_util
 import pymem3dg.visual as dg_vis
 import pymem3dg.read as dg_read
 import numpy as np
-from zmq import CONFLATE
 import parameters as ps
 
 # CONTINUE = True

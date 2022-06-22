@@ -24,4 +24,4 @@ def runSims(CONTINUE = True):
     process_map(worker, jobs, max_workers=12)
 
 if __name__ == "__main__":
-    runSims(CONTINUE=True)
+    runSims(CONTINUE=False)
