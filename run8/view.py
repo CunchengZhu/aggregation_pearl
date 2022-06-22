@@ -16,7 +16,7 @@ def plotTrajectory(trajNc, parameters, figName):
         axs[np.unravel_index(count, sp_size, "F")],
         trajNc,
         parameters,
-        frames=np.arange(100, dg_read.sizeOf(trajNc), 1),
+        # frames=np.arange(100, dg_read.sizeOf(trajNc), 1),
         # logScale=True,
         zeroing=True,
         potentialEnergy=True,
@@ -33,7 +33,7 @@ def plotTrajectory(trajNc, parameters, figName):
         # edgeSpringEnergy=True,
         # faceSpringEnergy=True,
         # lcrSpringEnergy=True,
-        dirichletEnergy=True,
+        # dirichletEnergy=True,
     )
     count = count + 1
 
@@ -41,7 +41,7 @@ def plotTrajectory(trajNc, parameters, figName):
         axs[np.unravel_index(count, sp_size, "F")],
         trajNc,
         parameters,
-        frames=np.arange(100, dg_read.sizeOf(trajNc), 1),
+        # frames=np.arange(100, dg_read.sizeOf(trajNc), 1),
     )
     count = count + 1
 
@@ -49,7 +49,7 @@ def plotTrajectory(trajNc, parameters, figName):
         axs[np.unravel_index(count, sp_size, "F")],
         trajNc,
         parameters,
-        frames=np.arange(100, dg_read.sizeOf(trajNc), 1),
+        # frames=np.arange(100, dg_read.sizeOf(trajNc), 1),
         # logScale=True,
         bendingPotential=True,
         # deviatoricPotential=True,
@@ -58,13 +58,14 @@ def plotTrajectory(trajNc, parameters, figName):
         # dirichletPotential=True,
         # adsorptionPotential=True,
     )
+    # axs[np.unravel_index(count, sp_size, "F")].set_ylim([0, 0.00015])
     count = count + 1
 
     dg_vis.plotMechanicalForces(
         axs[np.unravel_index(count, sp_size, "F")],
         trajNc,
         parameters,
-        frames=np.arange(100, dg_read.sizeOf(trajNc), 1),
+        # frames=np.arange(100, dg_read.sizeOf(trajNc), 1),
         # logScale=True,
         bendingForce=True,
         # capillaryForce=True,

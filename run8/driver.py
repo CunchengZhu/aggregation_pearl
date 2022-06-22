@@ -6,7 +6,8 @@ import numpy as np
 import parameters as ps
 
 # CONTINUE = True
-CONTINUE = False 
+CONTINUE = False
+
 
 def localRun(parameters, CONTINUE=True):
     ####################################################
@@ -29,7 +30,7 @@ def localRun(parameters, CONTINUE=True):
             refVertex,
             proteinDensity,
             velocity,
-            FRAME
+            FRAME,
         ) = ps.initialConditionsByMatrices()
     ####################################################
     #                 System                           #
@@ -62,8 +63,8 @@ def localRun(parameters, CONTINUE=True):
     """ Integrator construction """
     fe = dg.Euler(
         system=g,
-        characteristicTimeStep=h,
-        totalTime=1000000 * h,
+        characteristicTimeStep= 3 * h,
+        totalTime=3000000 * h,
         savePeriod=1000 * h,
         tolerance=0.1 * (Kb / R_bar),
         outputDirectory=outputDir,
@@ -82,8 +83,9 @@ def localRun(parameters, CONTINUE=True):
     # fe.ifOutputMeshFile = True
 
     fe.integrate()
-    
+
+
 if __name__ == "__main__":
     xi, A_bar, R_bar, Kb, h = ps.scalingVariables()
     parameters = ps.parameters(xi, A_bar, R_bar, Kb)
-    localRun(parameters, CONTINUE = CONTINUE)
+    localRun(parameters, CONTINUE=CONTINUE)

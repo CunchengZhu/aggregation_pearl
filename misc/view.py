@@ -96,12 +96,12 @@ dg_vis.plotChemicalPotentials(
     axs[np.unravel_index(count, sp_size, "F")],
     trajNc,
     parameters,
-    logScale=True,
+    # logScale=True,
     bendingPotential=True,
     # deviatoricPotential=True,
     aggregationPotential=True,
     entropyPotential=True,
-    dirichletPotential=True,
+    # dirichletPotential=True,
     # adsorptionPotential=True,
 )
 count = count + 1
@@ -110,7 +110,7 @@ dg_vis.plotMechanicalForces(
     axs[np.unravel_index(count, sp_size, "F")],
     trajNc,
     parameters,
-    logScale=True,
+    # logScale=True,
     bendingForce=True,
     # capillaryForce=True,
     # osmoticForce=True,
