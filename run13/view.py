@@ -94,7 +94,7 @@ def worker(var):
 
 def runPlots():
     jobs = []
-    for v in np.arange(0, 120, 20):
+    for v in np.arange(0, 110, 10):
         jobs.append(v)
     process_map(worker, jobs, max_workers=12)
 
