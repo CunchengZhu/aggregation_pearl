@@ -6,7 +6,6 @@ import numpy as np
 import parameters as ps
 
 def localRun():
-    # CONTINUE = True
     CONTINUE = True
     ####################################################
     #                 Initialize pathes                #
@@ -15,37 +14,19 @@ def localRun():
     ####################################################
     #            Arguments for System                    #
     ####################################################
-    parameters = ps.parameters()
     if CONTINUE:
-        initialConditions, lengthScale = ps.initialConditionsByMatrices()
         initialConditions = ps.continuationByNc()
     else:
-        initialConditions, lengthScale = ps.initialConditionsByMatrices()
+        initialConditions = ps.initialConditionsByMatrices()
     ####################################################
     #                 System                           #
     ####################################################
     """ System construction """
-    arguments = initialConditions
-    arguments["parameters"] = parameters
-    g = dg.System(**arguments)
-
-    """ Mesh processor """
-    g.meshProcessor.meshMutator.isShiftVertex = True
-    g.meshProcessor.meshMutator.flipNonDelaunay = True
-    # g.meshProcessor.meshMutator.splitLarge = True
-    g.meshProcessor.meshMutator.splitFat = True
-    g.meshProcessor.meshMutator.splitSkinnyDelaunay = True
-    g.meshProcessor.meshMutator.splitCurved = True
-    g.meshProcessor.meshMutator.minimumEdgeLength = 0.001 * lengthScale
-    g.meshProcessor.meshMutator.curvTol = 0.1 / lengthScale
-    g.meshProcessor.meshMutator.collapseSkinny = True
-    g.meshProcessor.meshMutator.collapseSmall = True
-    # g.meshProcessor.meshMutator.collapseFlat = True
-    # g.meshProcessor.meshMutator.targetFaceArea = 0.0003 * lengthScale **2
-    g.meshProcessor.meshMutator.isSmoothenMesh = True
-    """ System initialization """
+    g = dg.System(**initialConditions)
+    g.meshProcessor = ps.meshProcessorSetting(g.meshProcessor)
     g.initialize(nMutation=0, ifMute=False)
     # g.testForceComputation(h)
+
     ####################################################
     #          Time integration / Optimization         #
     ####################################################
@@ -56,7 +37,7 @@ def localRun():
         frame = 0
     fe = dg.Euler(
         system=g,
-        characteristicTimeStep=5e-4,
+        characteristicTimeStep=20e-4,
         totalTime=3000000,
         savePeriod=500 * 5e-4,
         tolerance=0,

@@ -36,11 +36,12 @@ def localRun():
     g.meshProcessor.meshMutator.splitFat = True
     g.meshProcessor.meshMutator.splitSkinnyDelaunay = True
     g.meshProcessor.meshMutator.splitCurved = True
-    g.meshProcessor.meshMutator.minimumEdgeLength = 0.001 * lengthScale
+    g.meshProcessor.meshMutator.minimumEdgeLength = 0.02 * lengthScale
+    g.meshProcessor.meshMutator.maximumEdgeLength = 0.2 * lengthScale
     g.meshProcessor.meshMutator.curvTol = 0.1 / lengthScale
     g.meshProcessor.meshMutator.collapseSkinny = True
     g.meshProcessor.meshMutator.collapseSmall = True
-    # g.meshProcessor.meshMutator.collapseFlat = True
+    g.meshProcessor.meshMutator.collapseFlat = True
     # g.meshProcessor.meshMutator.targetFaceArea = 0.0003 * lengthScale **2
     g.meshProcessor.meshMutator.isSmoothenMesh = True
     """ System initialization """

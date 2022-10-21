@@ -7,7 +7,7 @@ import parameters as ps
 
 def localRun():
     # CONTINUE = True
-    CONTINUE = True
+    CONTINUE = False
     ####################################################
     #                 Initialize pathes                #
     ####################################################

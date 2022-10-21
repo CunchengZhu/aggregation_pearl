@@ -6,40 +6,6 @@ import copy
 import pymem3dg.read as dg_read
 from numpy.random import RandomState
 
-
-def periodic(vertexPositions, vertexDualAreas, time, geodesicDistance):
-    freq = 12
-    totalHeight = np.max(vertexPositions[:, 2]) - np.min(vertexPositions[:, 2])
-
-    direction = copy.deepcopy(vertexPositions)
-    direction[:, 2] = 0
-    direction = dg_util.rowwiseNormalize(direction)
-
-    xi, A_bar, R_bar, Kb, h = scalingVariables()
-    Kf = 0.05 * (Kb / R_bar)
-
-    magnitude = Kf * (
-        1 + np.sin(freq * 2 * np.pi / totalHeight * vertexPositions[:, 2])
-    )
-
-    return dg_util.rowwiseScaling(magnitude, direction)
-
-
-def point(vertexPositions, vertexDualAreas, time, geodesicDistances):
-    _, lengthScale = initialConditionsByMatrices()
-    decayTime = 30
-    std = 0.05 * lengthScale
-    Kf = 0.2
-    direction = dg_util.rowwiseNormalize(vertexPositions)
-    magnitude = (
-        Kf
-        * np.exp(-time / decayTime)
-        * dg_util.gaussianDistribution(geodesicDistances, 0, std)
-    )
-
-    return dg_util.rowwiseScaling(magnitude, direction)
-
-
 def initialConditionsByMatrices():
     lengthScale = 6
     face, vertex = dg.getIcosphere(lengthScale, 3)
@@ -73,7 +39,7 @@ def continuationByNc():
     """trajFile construction"""
     outputDir = "."
     trajFile = outputDir + "//traj.nc"
-    FRAME = dg_read.sizeOf(trajFile) - 1
+    FRAME = 1643 #dg_read.sizeOf(trajFile) - 1
 
     initialConditions = {"trajFile": trajFile, "startingFrame": FRAME}
     return initialConditions
@@ -89,7 +55,7 @@ def parameters():
     p.point.isFloatVertex = False
 
     p.protein.profile = "tanh"
-    p.protein.geodesicProteinDensityDistribution = [2, 2, 1, 0]
+    p.protein.geodesicProteinDensityDistribution = [1, 1, 1, 0]
     p.protein.proteinInteriorPenalty = 0
     p.protein.tanhSharpness = 10
 
@@ -105,7 +71,7 @@ def parameters():
     p.bending.Kdc = 0.1
     p.bending.Kb = 0.1
     p.bending.Kbc = 0.2
-    p.bending.H0c = 3
+    p.bending.H0c = 2
 
     p.tension.isConstantSurfaceTension = False
     p.tension.Ksg = 1e4
@@ -121,10 +87,10 @@ def parameters():
 
     p.osmotic.isPreferredVolume = True
     p.osmotic.isConstantOsmoticPressure = False
-    p.osmotic.Kv = 500
+    p.osmotic.Kv = 3000
     p.osmotic.V_res = 0
     p.osmotic.n = 1
-    p.osmotic.Vt = 0.9 * 897  # (4 / 3 * np.pi * R**3)
+    p.osmotic.Vt = 0.9 * 909.236  # (4 / 3 * np.pi * R**3)
     p.osmotic.cam = -1
     p.osmotic.lambdaV = 0
 

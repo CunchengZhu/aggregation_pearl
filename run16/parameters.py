@@ -27,9 +27,9 @@ def periodic(vertexPositions, vertexDualAreas, time, geodesicDistance):
 
 def point(vertexPositions, vertexDualAreas, time, geodesicDistances):
     _, lengthScale = initialConditionsByMatrices()
-    decayTime = 30
-    std = 0.05 * lengthScale
-    Kf = 0.2
+    decayTime = 50
+    std = 0.1 * lengthScale
+    Kf = 1.3
     direction = dg_util.rowwiseNormalize(vertexPositions)
     magnitude = (
         Kf
@@ -89,7 +89,7 @@ def parameters():
     p.point.isFloatVertex = False
 
     p.protein.profile = "tanh"
-    p.protein.geodesicProteinDensityDistribution = [2, 2, 1, 0]
+    p.protein.geodesicProteinDensityDistribution = [1, 1, 1, 0]
     p.protein.proteinInteriorPenalty = 0
     p.protein.tanhSharpness = 10
 
@@ -102,10 +102,10 @@ def parameters():
     p.variation.geodesicMask = -1
 
     p.bending.Kd = 0
-    p.bending.Kdc = 0.1
+    p.bending.Kdc = 0
     p.bending.Kb = 0.1
-    p.bending.Kbc = 0.2
-    p.bending.H0c = 3
+    p.bending.Kbc = 0.3
+    p.bending.H0c = 0.5
 
     p.tension.isConstantSurfaceTension = False
     p.tension.Ksg = 1e4
@@ -121,10 +121,10 @@ def parameters():
 
     p.osmotic.isPreferredVolume = True
     p.osmotic.isConstantOsmoticPressure = False
-    p.osmotic.Kv = 500
+    p.osmotic.Kv = 3000
     p.osmotic.V_res = 0
     p.osmotic.n = 1
-    p.osmotic.Vt = 0.9 * 897  # (4 / 3 * np.pi * R**3)
+    p.osmotic.Vt = 0.9 * 909.236  # (4 / 3 * np.pi * R**3)
     p.osmotic.cam = -1
     p.osmotic.lambdaV = 0
 
@@ -137,7 +137,7 @@ def parameters():
 
     p.dpd.gamma = 0
 
-    p.external.setForm(None)
+    p.external.setForm(point)
 
     p.spring.Kst = 0
     p.spring.Ksl = 0
